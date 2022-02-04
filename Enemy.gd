@@ -1,9 +1,10 @@
 extends KinematicBody2D
 
-var gravity = 10
+var gravity = 20
 var velocity = Vector2.ZERO
 export var ACCELERATION = 300
 export var FRICTION = 200
+var jump_force = 800
 onready var hole_raycast = $HoleRayCast
 onready var wall_raycast = $WallRayCast
 var is_moving_right = true
@@ -12,6 +13,9 @@ var sees_player = false
 onready var sprite = $Sprite
 onready var animation_tree = $AnimationTree
 onready var wander_timer = $WanderTimer
+
+var jumping = false
+var sees_wall = false
 
 var state = WANDER
 
@@ -29,6 +33,9 @@ export(int) var wander_range = 12
 
 onready var start_position = global_position
 onready var target_position = global_position
+onready var last_position = global_position
+
+export var WANDER_TARGET_THRESHOLD = 4
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -37,6 +44,7 @@ onready var target_position = global_position
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	animation_tree.active = true
 	state = pick_random_state([IDLE, WANDER])
 	#var img_texture_path := '"' + "res://Enemies/" + str(Level.last_saved_picture_name) + '"'
@@ -60,6 +68,10 @@ func _physics_process(delta):
 			accelerate_towards_point(Vector2(target_position.x, position.y), delta)
 			detect_wall()
 			
+			if global_position.distance_to(target_position) <= WANDER_TARGET_THRESHOLD:
+				update_wander()
+				last_position = global_position
+			
 			#detect_character()
 			#if sees_player:
 			#	state = CHASE
@@ -73,12 +85,26 @@ func _physics_process(delta):
 				#		state = ATTACK
 				#else:
 				accelerate_towards_point(Vector2(player.global_position.x, position.y), delta)
+				
+			else:
+				seek_player()
+				accelerate_towards_point(last_position, delta)
+				
+				if global_position.distance_to(last_position) <= 5:
+					state = IDLE
 		ATTACK:
 			pass
 			
 	detect_hole()
-	detect_wall()
-	velocity = move_and_slide(velocity)
+	move()
+	
+	if jumping and velocity.y > 0:
+		if wall_raycast.is_colliding():
+			print("impossible jump")
+			flip()
+			jumping = false
+			
+	print(state)
 			
 func move():
 	velocity.x = speed if is_moving_right else -speed
@@ -96,7 +122,16 @@ func detect_hole():
 				is_moving_right = !is_moving_right
 				scale.x = -scale.x
 			1:
-				velocity = Vector2.UP * 450
+				jump()
+		
+func jump():
+	jumping = true
+	if is_on_floor():
+		velocity = Vector2.UP * jump_force
+		
+func flip():
+	is_moving_right = !is_moving_right
+	scale.x = -scale.x
 		
 func detect_character():
 	if wall_raycast.is_colliding() and is_on_floor():
@@ -105,7 +140,15 @@ func detect_character():
 func detect_wall():
 	if wall_raycast.is_colliding() and is_on_floor():
 		print("wall in front of enemy")
-		velocity = Vector2.UP * 450
+		sees_wall = true
+		if state == CHASE:
+			jump()
+			print("jump")
+		else:
+			flip()
+			print("flip")
+	else:
+		sees_wall = false
 		
 func attack_state():
 	pass
@@ -128,7 +171,6 @@ func _on_Area2D_body_entered(body):
 		player = body
 		sees_player = true
 		#print("enemy sees the player!!")
-
 
 func _on_Area2D_body_exited(body):
 	if body.is_in_group("MC"):

@@ -37,6 +37,8 @@ func spawn_enemy():
 	enemy.global_position = enemy_spawn_position
 
 	enemy.get_node("Sprite").texture = load_external_texture("user://images/" + last_saved_picture_name)
+	GameManager.enemies_spawned += 1
+	print(GameManager.enemies_spawned)
 	
 func load_external_texture(path):
 	var tex_file = File.new()
