@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Jamegam_Final_for_real_this_time.mp3-228b705ecb454783b0e8ae2a463106d6.mp3str"
+
+[deps]
+
+source_file="res://Audio/Jamegam_Final_for_real_this_time.mp3"
+dest_files=[ "res://.import/Jamegam_Final_for_real_this_time.mp3-228b705ecb454783b0e8ae2a463106d6.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

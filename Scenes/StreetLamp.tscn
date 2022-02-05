@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Sprites/street_light.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/light_cone.png" type="Texture" id=3]
+
+[node name="Lamp" type="Node2D"]
+z_index = -2
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -158 )
+texture = ExtResource( 2 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( -90, -99 )
+rotation = 0.133575
+texture = ExtResource( 3 )
+shadow_enabled = true
+
+[node name="Light2D2" type="Light2D" parent="."]
+position = Vector2( 90, -99 )
+rotation = -0.13439
+texture = ExtResource( 3 )
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 0.74902 )

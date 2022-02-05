@@ -14,15 +14,16 @@ config/name="GD Paint"
 config/description="GD Paint is a simple image editor made using Godot and GDScript.
 It supports different types of 'brushes': a basic pen/pencil
 and eraser, as well as a rectangle and a circle brush."
-run/main_scene="res://paint_root.tscn"
+run/main_scene="res://Scenes/Level1.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="ENEMY"
-config/icon="res://icon.png"
+config/icon="res://Sprites/icon.png"
 
 [autoload]
 
-PaintManager="*res://PaintManager.tscn"
-GameManager="*res://Game Manager.tscn"
+PaintManager="*res://Scenes/PaintManager.tscn"
+GameManager="*res://Scenes/Game Manager.tscn"
+BackgroundMusic="*res://Scenes/BackgroundMusic.tscn"
 
 [display]
 
@@ -79,3 +80,4 @@ left_mouse={
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+environment/default_clear_color=Color( 0.121569, 0.0901961, 0.345098, 1 )
