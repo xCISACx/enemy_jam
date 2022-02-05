@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
-var gravity = 20
+var gravity = 10
 var velocity = Vector2.ZERO
 export var ACCELERATION = 300
 export var FRICTION = 200
-var jump_force = 800
+var jump_force = 600
 onready var hole_raycast = $HoleRayCast
 onready var wall_raycast = $WallRayCast
 var is_moving_right = true
@@ -26,7 +26,7 @@ enum {
 	ATTACK
 }
 
-var speed = 128
+var speed = 150
 var player = null
 
 export(int) var wander_range = 12
@@ -66,17 +66,20 @@ func _physics_process(delta):
 			if wander_timer.get_time_left() == 0:
 				update_wander()
 			accelerate_towards_point(Vector2(target_position.x, position.y), delta)
-			detect_wall()
 			
 			if global_position.distance_to(target_position) <= WANDER_TARGET_THRESHOLD:
 				update_wander()
 				last_position = global_position
+				
+			detect_wall()
 			
 			#detect_character()
 			#if sees_player:
 			#	state = CHASE
 		CHASE:
+			print("CHASE")
 			if player:
+				print("player!!")
 				#if reset_timer.is_stopped():
 					#reset_timer.start()
 				#if raycast_for_player() or global_position.distance_to(player.position) < 10: #if the enemy sees the player
@@ -84,7 +87,7 @@ func _physics_process(delta):
 				#		reset_timer.start() #stop the player reset timer
 				#		state = ATTACK
 				#else:
-				accelerate_towards_point(Vector2(player.global_position.x, position.y), delta)
+				accelerate_towards_point(Vector2(player.global_position.x, position.y), delta * ACCELERATION)
 				
 			else:
 				seek_player()
@@ -104,7 +107,7 @@ func _physics_process(delta):
 			flip()
 			jumping = false
 			
-	print(state)
+	#print(state)
 			
 func move():
 	velocity.x = speed if is_moving_right else -speed
@@ -133,20 +136,12 @@ func flip():
 	is_moving_right = !is_moving_right
 	scale.x = -scale.x
 		
-func detect_character():
-	if wall_raycast.is_colliding() and is_on_floor():
-		state = ATTACK
-		
 func detect_wall():
 	if wall_raycast.is_colliding() and is_on_floor():
 		print("wall in front of enemy")
 		sees_wall = true
-		if state == CHASE:
-			jump()
-			print("jump")
-		else:
-			flip()
-			print("flip")
+		jump()
+		print("jump")
 	else:
 		sees_wall = false
 		
@@ -159,7 +154,7 @@ func seek_player():
 	
 func accelerate_towards_point(point, delta):
 	var direction = global_position.direction_to(point)
-	velocity = velocity.move_toward(direction * speed, ACCELERATION * delta)
+	velocity = velocity.move_toward(Vector2(direction.x * speed, position.y), ACCELERATION * delta)
 	sprite.flip_h = velocity.x < 0
 	
 func update_target_position():
@@ -189,5 +184,5 @@ func pick_random_state(state_list):
 	return state_list.pop_front() #pick the first random result
 
 func _on_WanderTimer_timeout():
-	print("timeout")
+	#print("timeout")
 	update_target_position()

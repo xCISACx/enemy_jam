@@ -52,6 +52,7 @@ var last_saved_picture_path
 onready var save_dialog = $"../../../SaveFileDialog"
 
 signal saved_image
+signal _on_CloseButton_pressed
 
 # The color of the background. We need this for the eraser (see the how we handle the eraser
 # in the _draw function for more details).
@@ -61,6 +62,7 @@ func _ready():
 	# Get the top left position node. We need this to find out whether or not the mouse is inside the canvas.
 	TL_node = get_node("TLPos")
 	connect("saved_image", PaintManager, "_on_PaintControl_saved_image")
+	connect("_on_CloseButton_pressed", PaintManager, "close_enemy_creator")
 	image_saved = false
 
 
@@ -263,3 +265,7 @@ func get_last_saved_picture():
 	
 func get_last_saved_picture_path():
 	return last_saved_picture_path
+
+func _on_CloseButton_pressed():
+	emit_signal("_on_CloseButton_pressed")
+	print("close")

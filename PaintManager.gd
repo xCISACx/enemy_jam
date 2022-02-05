@@ -5,11 +5,13 @@ var in_enemy_creator = false
 var enemy_spawned = false
 onready var enemy_scene = preload("res://Enemy.tscn")
 onready var paint_popup = get_node("/root/Level/PaintRoot")
+onready var close_button = get_node("/root/Level/PaintRoot/CloseButton")
 onready var paint_control = get_node("/root/Level/PaintRoot/ViewportContainer/Viewport/PaintControl")
 onready var drawing_camera = get_node("/root/Level/PaintRoot/DrawingCamera")
 onready var main_camera = get_node("/root/Level/Camera2D")
 var last_saved_picture_name = ""
 var can_draw = false
+signal s
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -59,12 +61,12 @@ func open_enemy_creator():
 	in_enemy_creator = true
 	can_draw = true
 	drawing_camera.current = true
-	#get_tree().paused = true
+	get_tree().paused = true
 	paint_popup.show()
 	
 func close_enemy_creator():
 	paint_control.set_process(false)
-	#get_tree().paused = false
+	get_tree().paused = false
 	main_camera.current = true
 	in_enemy_creator = false
 	can_draw = false
