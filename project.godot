@@ -21,7 +21,7 @@ config/icon="res://Sprites/icon.png"
 
 [autoload]
 
-PaintManager="*res://Scenes/PaintManager.tscn"
+PaintManager="res://Scenes/PaintManager.tscn"
 GameManager="*res://Scenes/Game Manager.tscn"
 BackgroundMusic="*res://Scenes/BackgroundMusic.tscn"
 

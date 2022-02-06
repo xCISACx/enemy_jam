@@ -916,8 +916,8 @@ margin_bottom = 400.0
 resizable = true
 access = 1
 filters = PoolStringArray( "*.png" )
-current_dir = "user://D:/Godot Projects/enemy_jam"
-current_path = "user://D:/Godot Projects/enemy_jam/"
+current_dir = "user://C:/Users/Nayut/Documents/GitHub/enemy_jam"
+current_path = "user://C:/Users/Nayut/Documents/GitHub/enemy_jam/"
 
 [node name="DrawingCamera" type="Camera2D" parent="CanvasLayer/PaintRoot"]
 anchor_mode = 0

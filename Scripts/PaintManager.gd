@@ -24,14 +24,14 @@ func _ready():
 func _process(delta):
 	pass
 
-func _input(event):
-	if Input.is_action_just_pressed("left_mouse"):
-		if not enemy_spawned and not in_enemy_creator:
-			enemy_spawn_position = get_global_mouse_position()
-			print(main_camera.get_global_mouse_position())
-			open_enemy_creator()
-	else:
-		pass
+#func _input(event):
+#	if Input.is_action_just_pressed("left_mouse"):
+#		if not enemy_spawned and not in_enemy_creator:
+#			enemy_spawn_position = get_global_mouse_position()
+#			#print(main_camera.get_global_mouse_position())
+#			open_enemy_creator()
+#	else:
+#		pass
 
 func spawn_enemy():
 	var enemy = enemy_scene.instance()
@@ -55,14 +55,14 @@ func load_external_texture(path):
 	tex_file.close()
 	return imgtex
 	
-func open_enemy_creator():
-	paint_control.set_process(true)
-	enemy_spawned = false
-	in_enemy_creator = true
-	can_draw = true
-	drawing_camera.current = true
-	get_tree().paused = true
-	paint_popup.show()
+#func open_enemy_creator():
+#	paint_control.set_process(true)
+#	enemy_spawned = false
+#	in_enemy_creator = true
+#	can_draw = true
+#	drawing_camera.current = true
+#	get_tree().paused = true
+#	paint_popup.show()
 	
 func close_enemy_creator():
 	paint_control.set_process(false)

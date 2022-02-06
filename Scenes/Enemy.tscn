@@ -1,13 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Sprites/enemy64.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31, 31.5 )
-
-[sub_resource type="CircleShape2D" id=8]
-radius = 120.0
 
 [sub_resource type="Animation" id=3]
 resource_name = "Move"
@@ -65,26 +62,6 @@ texture = ExtResource( 1 )
 position = Vector2( 2, -31.5 )
 shape = SubResource( 1 )
 
-[node name="HoleRayCast" type="RayCast2D" parent="."]
-position = Vector2( 18.741, -47 )
-enabled = true
-cast_to = Vector2( 0, 320 )
-collision_mask = 4
-
-[node name="WallRayCast" type="RayCast2D" parent="."]
-position = Vector2( 13.385, -60.078 )
-rotation = -1.5708
-enabled = true
-cast_to = Vector2( 0, 40 )
-collision_mask = 4
-
-[node name="PlayerDetectionArea" type="Area2D" parent="." groups=["Enemy"]]
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
-position = Vector2( 0, -32 )
-shape = SubResource( 8 )
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Move = SubResource( 3 )
 anims/RESET = SubResource( 4 )
@@ -94,11 +71,3 @@ tree_root = SubResource( 6 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 7 )
-
-[node name="WanderTimer" type="Timer" parent="."]
-one_shot = true
-autostart = true
-
-[connection signal="body_entered" from="PlayerDetectionArea" to="." method="_on_Area2D_body_entered"]
-[connection signal="body_exited" from="PlayerDetectionArea" to="." method="_on_Area2D_body_exited"]
-[connection signal="timeout" from="WanderTimer" to="." method="_on_WanderTimer_timeout"]

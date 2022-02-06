@@ -1,0 +1,103 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://CB_tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://CB.gd" type="Script" id=2]
+[ext_resource path="res://dark_theme.tres" type="Theme" id=3]
+
+[node name="Main" type="Node"]
+
+[node name="Control" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -256.0
+theme = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Control/VBoxContainer"]
+margin_right = 256.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 128, 720 )
+
+[node name="ColorPicker" type="ColorPicker" parent="Control/VBoxContainer/Panel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = -392.0
+margin_right = 68.0
+margin_bottom = 70.0
+rect_scale = Vector2( 0.7, 0.7 )
+edit_alpha = false
+presets_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+anchor_right = 1.0
+margin_bottom = 64.0
+theme = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Control/HBoxContainer"]
+margin_bottom = 64.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -64.0
+theme = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Control/HBoxContainer2"]
+margin_bottom = 64.0
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -96.0
+margin_right = -136.0
+margin_bottom = -32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TileMap" type="TileMap" parent="."]
+z_index = -1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 393250, 0, 0 )
+script = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="TileMap"]
+position = Vector2( 312, 0 )
+anchor_mode = 0
+zoom = Vector2( 0.563, 1 )
+editor_draw_limits = true
+
+[connection signal="color_changed" from="Control/VBoxContainer/Panel/ColorPicker" to="TileMap" method="_on_ColorPicker_color_changed"]
+[connection signal="mouse_entered" from="Control/VBoxContainer/Panel/ColorPicker" to="TileMap" method="_on_ColorPicker_mouse_entered"]
+[connection signal="mouse_exited" from="Control/VBoxContainer/Panel/ColorPicker" to="TileMap" method="_on_ColorPicker_mouse_exited"]
+[connection signal="preset_added" from="Control/VBoxContainer/Panel/ColorPicker" to="TileMap" method="_on_ColorPicker_preset_added"]
+[connection signal="preset_removed" from="Control/VBoxContainer/Panel/ColorPicker" to="TileMap" method="_on_ColorPicker_preset_removed"]
+[connection signal="ready" from="Control/VBoxContainer/Panel/ColorPicker" to="TileMap" method="_on_ColorPicker_ready"]
