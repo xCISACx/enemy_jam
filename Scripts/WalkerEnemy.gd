@@ -56,7 +56,7 @@ func move():
 	if is_on_wall() and is_on_floor():
 		jump()
 		if wander_timer.is_stopped():
-			start_wander_timer(1)
+			start_wander_timer(jump_force/200)
 		
 func jump():
 	jumping = true
@@ -75,18 +75,6 @@ func accelerate_towards_point(point, delta):
 	velocity = velocity.move_toward(Vector2(direction.x * speed, position.y), ACCELERATION * delta)
 	sprite.flip_h = velocity.x < 0
 
-func _on_Area2D_body_entered(body):
-	if body.is_in_group("MC"):
-		player = body
-		sees_player = true
-		#print("enemy sees the player!!")
-
-func _on_Area2D_body_exited(body):
-	if body.is_in_group("MC"):
-		player = null
-		sees_player = false
-		#print("enemy doesn't see the player!!")
-	
 func start_wander_timer(duration):
 	wander_timer.start(duration)
 	
