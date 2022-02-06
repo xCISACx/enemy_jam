@@ -13,6 +13,7 @@ var sees_player = false
 onready var sprite = $Sprite
 onready var animation_tree = $AnimationTree
 onready var wander_timer = $WanderTimer
+onready var raycast = $RayCast2D
 
 var jumping = false
 var sees_wall = false
@@ -57,6 +58,9 @@ func move():
 		jump()
 		if wander_timer.is_stopped():
 			start_wander_timer(jump_force/200)
+			
+	if is_on_floor() and !raycast.is_colliding():
+		flip()
 		
 func jump():
 	jumping = true
@@ -86,10 +90,8 @@ func _on_WanderTimer_timeout():
 
 func _on_HurtBox_area_entered(area):
 	if area.is_in_group("MC"):
-		print("mc hitbox entered enemy")
 		die()
 
 func _on_HitBox_body_entered(body):
 	if body.is_in_group("MC"):
-		print("enemy hitbox hit mc")
 		body.die()
