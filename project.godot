@@ -10,20 +10,18 @@ config_version=4
 
 [application]
 
-config/name="GD Paint"
-config/description="GD Paint is a simple image editor made using Godot and GDScript.
-It supports different types of 'brushes': a basic pen/pencil
-and eraser, as well as a rectangle and a circle brush."
+config/name="Enemy Jam"
 run/main_scene="res://Scenes/Level1.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="ENEMY"
-config/icon="res://Sprites/icon.png"
+config/icon="res://icon2.png"
 
 [autoload]
 
 PaintManager="res://Scenes/PaintManager.tscn"
 GameManager="*res://Scenes/Game Manager.tscn"
 BackgroundMusic="*res://Scenes/BackgroundMusic.tscn"
+CBManager="*res://CBManager.tscn"
 
 [display]
 
@@ -68,6 +66,11 @@ texture={
 left_mouse={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+right_mouse={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 

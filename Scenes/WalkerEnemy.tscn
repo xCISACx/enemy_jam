@@ -52,7 +52,7 @@ start_node = "Move"
 [sub_resource type="AnimationNodeStateMachinePlayback" id=7]
 
 [sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 31, 31.5 )
+extents = Vector2( 55.5, 31.5 )
 
 [node name="WalkerEnemy" type="KinematicBody2D" groups=["Enemy"]]
 z_index = 5
@@ -118,8 +118,8 @@ position = Vector2( 0, -31.5 )
 collision_layer = 32
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2( 2, 0 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" groups=["Enemy"]]
+position = Vector2( 2.5, 0 )
 shape = SubResource( 9 )
 
 [connection signal="body_entered" from="PlayerDetectionArea" to="." method="_on_Area2D_body_entered"]

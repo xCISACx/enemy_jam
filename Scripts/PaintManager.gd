@@ -34,35 +34,24 @@ func _ready():
 	
 func _process(delta):
 	pass
-
-<<<<<<< Updated upstream
+	
 #func _input(event):
 #	if Input.is_action_just_pressed("left_mouse"):
 #		if not enemy_spawned and not in_enemy_creator:
 #			enemy_spawn_position = get_global_mouse_position()
-#			#print(main_camera.get_global_mouse_position())
-#			open_enemy_creator()
+#			#open_enemy_creator()
 #	else:
 #		pass
-=======
-func _input(event):
-	if Input.is_action_just_pressed("left_mouse"):
-		if not enemy_spawned and not in_enemy_creator:
-			enemy_spawn_position = get_global_mouse_position()
-			open_enemy_creator()
-	else:
-		pass
-	if Input.is_key_pressed(KEY_1):
-		enemy_type = WALKER
-		print("walker")
-	elif Input.is_key_pressed(KEY_2):
-		enemy_type = FLYER
-		print("flyer")
-	elif Input.is_key_pressed(KEY_3):
-		enemy_type = BOMB
-		print("bomb")
+#	if Input.is_key_pressed(KEY_1):
+#		enemy_type = WALKER
+#		print("walker")
+#	elif Input.is_key_pressed(KEY_2):
+#		enemy_type = FLYER
+#		print("flyer")
+#	elif Input.is_key_pressed(KEY_3):
+#		enemy_type = BOMB
+#		print("bomb")
 	
->>>>>>> Stashed changes
 
 func spawn_enemy():
 	
@@ -113,10 +102,6 @@ func close_enemy_creator():
 	in_enemy_creator = false
 	can_draw = false
 	paint_popup.hide()
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 func _on_PaintControl_saved_image():
 	close_enemy_creator()

@@ -1,0 +1,195 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://dark_theme.tres" type="Theme" id=1]
+[ext_resource path="res://CBManager.gd" type="Script" id=2]
+[ext_resource path="res://CB_tileset.tres" type="TileSet" id=3]
+[ext_resource path="res://4f97ce0d4a52ceb.png" type="Texture" id=4]
+
+[node name="CBManager" type="CanvasLayer"]
+scale = Vector2( 10, 10 )
+transform = Transform2D( 10, 0, 0, 10, 0, 0 )
+
+[node name="Main" type="Node2D" parent="."]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="Popup" type="Popup" parent="Main"]
+visible = true
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Main/Popup"]
+scale = Vector2( 0.0555356, 0.0555356 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="ViewportContainer" type="ViewportContainer" parent="Main/Popup"]
+margin_right = 64.0
+margin_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera2D" type="Camera2D" parent="Main/Popup/ViewportContainer"]
+anchor_mode = 0
+current = true
+zoom = Vector2( 0.1, 0.1 )
+editor_draw_limits = true
+
+[node name="Viewport" type="Viewport" parent="Main/Popup/ViewportContainer"]
+size = Vector2( 64, 64 )
+transparent_bg = true
+handle_input_locally = false
+usage = 0
+debug_draw = 2
+render_target_update_mode = 3
+
+[node name="TileMap" type="TileMap" parent="Main/Popup/ViewportContainer/Viewport"]
+z_index = 99
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 1, 1 )
+cell_quadrant_size = 1
+format = 1
+
+[node name="Control" type="Control" parent="Main/Popup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -40.0
+margin_bottom = -20.0
+rect_scale = Vector2( 0.1, 0.1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/Popup/Control"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1024.0
+margin_right = 1280.0
+margin_bottom = 720.0
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Main/Popup/Control/VBoxContainer"]
+margin_right = 256.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 128, 720 )
+
+[node name="ColorPicker" type="ColorPicker" parent="Main/Popup/Control/VBoxContainer/Panel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 32.0
+margin_top = -344.0
+margin_right = 84.0
+margin_bottom = 118.0
+rect_scale = Vector2( 0.7, 0.7 )
+edit_alpha = false
+presets_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SaveButton" type="Button" parent="Main/Popup/Control/VBoxContainer/Panel"]
+margin_left = 106.0
+margin_top = 336.0
+margin_right = 162.0
+margin_bottom = 356.0
+text = "SAVE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoadButton" type="Button" parent="Main/Popup/Control/VBoxContainer/Panel"]
+margin_left = 106.0
+margin_top = 305.0
+margin_right = 162.0
+margin_bottom = 325.0
+text = "LOAD"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CloseButton" type="Button" parent="Main/Popup/Control/VBoxContainer/Panel"]
+margin_left = 226.0
+margin_top = 10.0
+margin_right = 246.0
+margin_bottom = 30.0
+text = "x"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/Popup/Control"]
+anchor_right = 1.0
+margin_bottom = 64.0
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Main/Popup/Control/HBoxContainer"]
+margin_bottom = 64.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Main/Popup/Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -64.0
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Main/Popup/Control/HBoxContainer2"]
+margin_bottom = 64.0
+
+[node name="SaveDialog" type="FileDialog" parent="Main/Popup/Control"]
+visible = true
+margin_left = 30.0
+margin_top = 40.0
+margin_right = 610.0
+margin_bottom = 320.0
+rect_scale = Vector2( 0.1, 0.1 )
+access = 1
+filters = PoolStringArray( "*.png" )
+current_dir = "user://D:/Godot Projects/enemy_jam"
+current_path = "user://D:/Godot Projects/enemy_jam/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoadDialog" type="FileDialog" parent="Main/Popup/Control"]
+visible = true
+margin_left = 30.0
+margin_top = 40.0
+margin_right = 610.0
+margin_bottom = 320.0
+rect_scale = Vector2( 0.1, 0.1 )
+window_title = "Load a File"
+mode = 0
+access = 1
+filters = PoolStringArray( "*.png" )
+current_dir = "user://images"
+current_path = "user://images/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="color_changed" from="Main/Popup/Control/VBoxContainer/Panel/ColorPicker" to="Main" method="_on_ColorPicker_color_changed"]
+[connection signal="mouse_entered" from="Main/Popup/Control/VBoxContainer/Panel/ColorPicker" to="Main" method="_on_ColorPicker_mouse_entered"]
+[connection signal="mouse_exited" from="Main/Popup/Control/VBoxContainer/Panel/ColorPicker" to="Main" method="_on_ColorPicker_mouse_exited"]
+[connection signal="ready" from="Main/Popup/Control/VBoxContainer/Panel/ColorPicker" to="Main/Popup/ViewportContainer/Viewport/TileMap" method="_on_ColorPicker_ready"]
+[connection signal="pressed" from="Main/Popup/Control/VBoxContainer/Panel/SaveButton" to="Main" method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="Main/Popup/Control/VBoxContainer/Panel/LoadButton" to="Main" method="_on_LoadButton_pressed"]
+[connection signal="pressed" from="Main/Popup/Control/VBoxContainer/Panel/CloseButton" to="Main" method="_on_CloseButton_pressed"]
+[connection signal="file_selected" from="Main/Popup/Control/SaveDialog" to="Main" method="_on_SaveDialog_file_selected"]
+[connection signal="file_selected" from="Main/Popup/Control/LoadDialog" to="Main" method="_on_LoadDialog_file_selected"]
