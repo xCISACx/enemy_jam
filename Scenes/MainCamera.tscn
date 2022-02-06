@@ -1,0 +1,11 @@
+[gd_scene format=2]
+
+[node name="MainCamera" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( -1090, 0 )
+anchor_mode = 0
+zoom = Vector2( 1.7, 1.5 )
+__meta__ = {
+"_editor_description_": ""
+}

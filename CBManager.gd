@@ -43,7 +43,7 @@ func _ready():
 	#print(image_size)
 	
 func _input(event):
-	if Input.is_action_just_pressed("left_mouse"):
+	if Input.is_action_just_pressed("left_mouse") and GameManager.in_game:
 		if not enemy_spawned and not in_enemy_creator:
 			enemy_spawn_position = GameManager.global_mouse_position
 			open_enemy_creator()
@@ -209,7 +209,7 @@ func open_enemy_creator():
 	
 func close_enemy_creator():
 	get_tree().paused = false
-	main_camera.current = true
+	GameManager.main_camera.current = true
 	in_enemy_creator = false
 	can_draw = false
 	popup.hide()

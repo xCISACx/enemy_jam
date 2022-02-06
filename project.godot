@@ -11,17 +11,17 @@ config_version=4
 [application]
 
 config/name="Enemy Jam"
-run/main_scene="res://Scenes/Level1.tscn"
+run/main_scene="res://MainMenu.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="ENEMY"
 config/icon="res://icon2.png"
 
 [autoload]
 
-PaintManager="res://Scenes/PaintManager.tscn"
 GameManager="*res://Scenes/Game Manager.tscn"
 BackgroundMusic="*res://Scenes/BackgroundMusic.tscn"
 CBManager="*res://CBManager.tscn"
+MainCamera="*res://Scenes/MainCamera.tscn"
 
 [display]
 
@@ -30,12 +30,17 @@ window/size/height=720
 window/dpi/allow_hidpi=true
 mouse_cursor/custom_image="res://cpp-export64.png"
 mouse_cursor/custom_image_hotspot=Vector2( 32, 45 )
-window/stretch/mode="2d"
+window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
 [gdnative]
 
 singletons=[  ]
+
+[gui]
+
+theme/custom="res://Styles/CyberTheme.tres"
+theme/custom_font="res://Font.tres"
 
 [importer_defaults]
 

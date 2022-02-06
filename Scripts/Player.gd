@@ -15,6 +15,7 @@ var grounded = false
 var jump_force = 350
 var jumping = false
 
+signal npc_death
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -24,6 +25,8 @@ var jumping = false
 func _ready():
 	randomize()
 	get_node("Camera2D").current = true
+	if GameManager.in_tutorial:
+		connect("tutorial_npc_death", GameManager, "tutorial_npc_death")
 	#var img_texture_path := '"' + "res://Enemies/" + str(Level.last_saved_picture_name) + '"'
 	#var img_texture: StreamTexture = load(img_texture_path)
 	pass # Replace with function body.
@@ -96,6 +99,8 @@ func detect_wall():
 #	pass
 
 func die():
+	if GameManager.in_tutorial:
+		emit_signal("tutorial_npc_death")
 	queue_free()
 
 func _on_HurtBox_body_entered(body):
