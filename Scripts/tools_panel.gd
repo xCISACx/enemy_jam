@@ -19,9 +19,6 @@ func _ready():
 
 	# Assign all of the needed signals for the brush buttons.
 	$ButtonToolPencil.connect("pressed", self, "button_pressed", ["mode_pencil"])
-	$ButtonToolEraser.connect("pressed", self, "button_pressed", ["mode_eraser"])
-	$ButtonToolRectangle.connect("pressed", self, "button_pressed", ["mode_rectangle"])
-	$ButtonToolCircle.connect("pressed", self, "button_pressed", ["mode_circle"])
 	$BrushSettings/ButtonShapeBox.connect("pressed", self, "button_pressed", ["shape_rectangle"])
 	$BrushSettings/ButtonShapeCircle.connect("pressed", self, "button_pressed", ["shape_circle"])
 

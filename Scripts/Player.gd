@@ -68,13 +68,17 @@ func flip():
 func detect_enemy():
 	if enemy_raycast.is_colliding() and is_on_floor():
 		var chance = randi() % 2
+		
 		match chance:
 			0:
 				#player jumps
-				jump()
+				attack()
 			1:
-				#player flips
-				flip()
+				#player attacks
+				attack()
+				
+func attack():
+	$AnimationPlayer.play("Attack")
 		
 func detect_wall():
 	if wall_raycast.is_colliding() and is_on_floor():
@@ -89,3 +93,13 @@ func detect_wall():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func die():
+	queue_free()
+
+func _on_HurtBox_body_entered(body):
+	queue_free()
+
+func _on_HitBox_body_entered(body):
+	if body.is_in_group("Enemy"):
+		body.die()

@@ -10,10 +10,7 @@ const IMAGE_SIZE = Vector2(720, 720)
 onready var view_port = get_parent()
 # Enums for the various modes and brush shapes that can be applied.
 enum BrushModes {
-	PENCIL,
-	ERASER,
-	CIRCLE_SHAPE,
-	RECTANGLE_SHAPE,
+	PENCIL
 }
 
 enum BrushShapes {
@@ -53,10 +50,6 @@ onready var save_dialog = $"../../../SaveFileDialog"
 
 signal saved_image
 signal _on_CloseButton_pressed
-
-# The color of the background. We need this for the eraser (see the how we handle the eraser
-# in the _draw function for more details).
-var bg_color = Color(1, 1, 1, 0)
 
 func _ready():
 	# Get the top left position node. We need this to find out whether or not the mouse is inside the canvas.
@@ -156,41 +149,6 @@ func add_brush(mouse_pos, type):
 	new_brush.brush_size = brush_size
 	new_brush.brush_color = brush_color
 
-	# If the new bursh is a rectangle shape, we need to calculate the top left corner of the rectangle and the
-	# bottom right corner of the rectangle.
-	if type == BrushModes.RECTANGLE_SHAPE:
-		var TL_pos = Vector2()
-		var BR_pos = Vector2()
-
-		# Figure out the left and right positions of the corners and assign them to the proper variable.
-		if mouse_pos.x < mouse_click_start_pos.x:
-			TL_pos.x = mouse_pos.x
-			BR_pos.x = mouse_click_start_pos.x
-		else:
-			TL_pos.x = mouse_click_start_pos.x
-			BR_pos.x = mouse_pos.x
-
-		# Figure out the top and bottom positions of the corners and assign them to the proper variable.
-		if mouse_pos.y < mouse_click_start_pos.y:
-			TL_pos.y = mouse_pos.y
-			BR_pos.y = mouse_click_start_pos.y
-		else:
-			TL_pos.y = mouse_click_start_pos.y
-			BR_pos.y = mouse_pos.y
-
-		# Assign the positions to the brush.
-		new_brush.brush_pos = TL_pos
-		new_brush.brush_shape_rect_pos_BR = BR_pos
-
-	# If the brush isa circle shape, then we need to calculate the radius of the circle.
-	if type == BrushModes.CIRCLE_SHAPE:
-		# Get the center point inbetween the mouse position and the position of the mouse when we clicked.
-		var center_pos = Vector2((mouse_pos.x + mouse_click_start_pos.x) / 2, (mouse_pos.y + mouse_click_start_pos.y) / 2)
-		# Assign the brush position to the center point, and calculate the radius of the circle using the distance from
-		# the center to the top/bottom positon of the mouse.
-		new_brush.brush_pos = center_pos
-		new_brush.brush_shape_circle_radius = center_pos.distance_to(Vector2(center_pos.x, mouse_pos.y))
-
 	# Add the brush and update/draw all of the brushes.
 	brush_data_list.append(new_brush)
 	update()
@@ -211,17 +169,6 @@ func _draw():
 				# making the radius half of brush size (so the circle is brush size pixels in diameter).
 				elif brush.brush_shape == BrushShapes.CIRCLE:
 					draw_circle(brush.brush_pos, brush.brush_size / 2, brush.brush_color)
-			BrushModes.ERASER:
-				# NOTE: this is a really cheap way of erasing that isn't really erasing!
-				# However, this gives similar results in a fairy simple way!
-
-				# Erasing works exactly the same was as pencil does for both the rectangle shape and the circle shape,
-				# but instead of using brush.brush_color, we instead use bg_color instead.
-				if brush.brush_shape == BrushShapes.RECTANGLE:
-					var rect = Rect2(brush.brush_pos - Vector2(brush.brush_size / 2, brush.brush_size / 2), Vector2(brush.brush_size, brush.brush_size))
-					draw_rect(rect, bg_color)
-				elif brush.brush_shape == BrushShapes.CIRCLE:
-					draw_circle(brush.brush_pos, brush.brush_size / 2, bg_color)
 
 
 func save_picture(path):

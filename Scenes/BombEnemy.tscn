@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Sprites/enemy64.png" type="Texture" id=1]
-[ext_resource path="res://Scripts/Enemy.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/BombEnemy.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31, 31.5 )
@@ -48,9 +48,10 @@ start_node = "Move"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=7]
 
-[node name="Enemy" type="KinematicBody2D"]
-collision_layer = 2
-collision_mask = 4
+[node name="BombEnemy" type="KinematicBody2D"]
+z_index = 5
+collision_layer = 8
+collision_mask = 32768
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -62,6 +63,17 @@ texture = ExtResource( 1 )
 position = Vector2( 2, -31.5 )
 shape = SubResource( 1 )
 
+<<<<<<< Updated upstream:Scenes/Enemy.tscn
+=======
+[node name="ImpactDetectionArea" type="Area2D" parent="." groups=["Enemy"]]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ImpactDetectionArea"]
+position = Vector2( 0, -32 )
+shape = SubResource( 8 )
+
+>>>>>>> Stashed changes:Scenes/BombEnemy.tscn
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Move = SubResource( 3 )
 anims/RESET = SubResource( 4 )
@@ -71,3 +83,13 @@ tree_root = SubResource( 6 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 7 )
+<<<<<<< Updated upstream:Scenes/Enemy.tscn
+=======
+
+[node name="WanderTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="ImpactDetectionArea" to="." method="_on_ImpactDetectionArea_body_entered"]
+[connection signal="timeout" from="WanderTimer" to="." method="_on_WanderTimer_timeout"]
+>>>>>>> Stashed changes:Scenes/BombEnemy.tscn

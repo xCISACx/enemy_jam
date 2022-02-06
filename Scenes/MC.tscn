@@ -1,0 +1,152 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://wizard2.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/light.png" type="Texture" id=3]
+[ext_resource path="res://wizard_attack.png" type="Texture" id=4]
+[ext_resource path="res://main.png" type="Texture" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 24.5, 32 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 14.5, 32.25 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 43.5, 23.5 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "Attack"
+length = 1.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("AttackSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 29 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 1.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AttackSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[node name="MC" type="KinematicBody2D" groups=["MC"]]
+z_index = 5
+collision_mask = 32768
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -33 )
+texture = ExtResource( 1 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( 5.96046e-07, -32.0001 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1.5, -33 )
+shape = SubResource( 1 )
+
+[node name="HoleRayCast" type="RayCast2D" parent="."]
+position = Vector2( 24, -47 )
+enabled = true
+cast_to = Vector2( 0, 310 )
+collision_mask = 32768
+
+[node name="WallRayCast" type="RayCast2D" parent="."]
+position = Vector2( 20, -62.682 )
+rotation = -1.5708
+enabled = true
+cast_to = Vector2( 0, 30 )
+collision_mask = 32768
+
+[node name="EnemyRayCast" type="RayCast2D" parent="."]
+position = Vector2( 31.782, -44.993 )
+rotation = -1.5708
+enabled = true
+cast_to = Vector2( 0, 65 )
+collision_mask = 8
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 1, -58 )
+texture = ExtResource( 3 )
+texture_scale = 0.8
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -34 )
+zoom = Vector2( 1.7, 1.7 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 0, -31.5 )
+collision_layer = 4
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2( -0.5, -1.25 )
+shape = SubResource( 2 )
+
+[node name="HitBox" type="Area2D" parent="." groups=["MC"]]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 0, -31.5 )
+collision_layer = 2
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2( 62.5, 0 )
+shape = SubResource( 3 )
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Attack = SubResource( 4 )
+anims/RESET = SubResource( 5 )
+
+[node name="AttackSprite" type="Sprite" parent="."]
+position = Vector2( 38, -33 )
+texture = ExtResource( 4 )
+hframes = 42
+
+[connection signal="body_entered" from="HurtBox" to="." method="_on_HurtBox_body_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_HitBox_body_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_HurtBox_body_entered"]
